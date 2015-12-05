@@ -56,6 +56,9 @@ int checkForPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(string inp
         break;
       }
     }
+	if(flag == 1) {
+	  break;
+	}
   }
 
   return flag;
