@@ -10,7 +10,7 @@ using namespace std;
 
 /* Prototypes */
 int checkForRepeatWithOneLetterBetween(string);
-int checkForPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(string);
+int checkForPairOfLettersThatAppearsAtLeastTwiceWithoutOverlapping(string);
 
 int main() {
   string inputLine;
@@ -19,7 +19,7 @@ int main() {
   int nice = 0;
   //while(getline(myfile, inputLine)) {
   while(getline(cin, inputLine)) {
-    if((checkForRepeatWithOneLetterBetween(inputLine) == 1) && (checkForPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(inputLine) == 1)) {
+    if((checkForRepeatWithOneLetterBetween(inputLine) == 1) && (checkForPairOfLettersThatAppearsAtLeastTwiceWithoutOverlapping(inputLine) == 1)) {
       ++nice;
     }
   }
@@ -43,7 +43,7 @@ int checkForRepeatWithOneLetterBetween(string inputString) {
   return flag;
 }
 
-int checkForPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(string inputString) {
+int checkForPairOfLettersThatAppearsAtLeastTwiceWithoutOverlapping(string inputString) {
   int flag = 0;
   for(string::size_type i = 0; i < (inputString.size()-3); ++i) {
     char currLetter = inputString[i];
@@ -56,9 +56,9 @@ int checkForPairOfTwoLettersThatAppearsAtLeastTwiceWithoutOverlapping(string inp
         break;
       }
     }
-	if(flag == 1) {
-	  break;
-	}
+    if(flag == 1) {
+      break;
+    }
   }
 
   return flag;
