@@ -11,14 +11,14 @@ int main() {
   int floor = 0;
   for(char& c : input) {
     if(c == '(') {
-	  ++floor;
-	}
-	if(c == ')') {
-	  --floor;
-	}
+      ++floor;
+    }
+    if(c == ')') {
+      --floor;
+    }
   }
-  
+
   cout << "Floor: " << floor << endl;
-  
+
   return 0;
 }

@@ -13,29 +13,29 @@ int main() {
   int positionFoundFlag = 0;
   for(char& c : input) {
     if(c == '(') {
-	  ++floor;
-	  if(positionFoundFlag == 0) {
-	    if (floor == -1) {
-		  positionFoundFlag = 1;
-		} else {
-		  ++position;
-		}
-	  }
-	}
-	if(c == ')') {
-	  --floor;
-	  if(positionFoundFlag == 0) {
-	    if (floor == -1) {
-		  positionFoundFlag = 1;
-		} else {
-		  ++position;
-		}
-	  }
-	}
+      ++floor;
+      if(positionFoundFlag == 0) {
+        if (floor == -1) {
+          positionFoundFlag = 1;
+        } else {
+          ++position;
+        }
+      }
+    }
+    if(c == ')') {
+      --floor;
+      if(positionFoundFlag == 0) {
+        if (floor == -1) {
+          positionFoundFlag = 1;
+        } else {
+          ++position;
+        }
+      }
+    }
   }
-  
+
   cout << "Floor: " << floor << endl;
   cout << "First basement position: " << position << endl;
-  
+
   return 0;
 }
