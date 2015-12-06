@@ -31,7 +31,8 @@ int main() {
 
 int checkForRepeatWithOneLetterBetween(string inputString) {
   int flag = 0;
-  for(string::size_type i = 0; i < (inputString.size()-2); ++i) {
+  string::size_type inputStringSize = inputString.size();
+  for(string::size_type i = 0; i < (inputStringSize-2); ++i) {
     char currLetter = inputString[i];
     char nextLetter = inputString[i+2];
     if(currLetter == nextLetter) {
@@ -45,10 +46,11 @@ int checkForRepeatWithOneLetterBetween(string inputString) {
 
 int checkForPairOfLettersThatAppearsAtLeastTwiceWithoutOverlapping(string inputString) {
   int flag = 0;
-  for(string::size_type i = 0; i < (inputString.size()-3); ++i) {
+  string::size_type inputStringSize = inputString.size();
+  for(string::size_type i = 0; i < (inputStringSize-3); ++i) {
     char currLetter = inputString[i];
     char nextLetter = inputString[i+1];
-    for(string::size_type j = i+2 ; j < (inputString.size()-1); ++j) {
+    for(string::size_type j = i+2 ; j < (inputStringSize-1); ++j) {
       char secondCurrLetter = inputString[j];
       char secondNextLetter = inputString[j+1];
       if((currLetter == secondCurrLetter) && (nextLetter == secondNextLetter)) {

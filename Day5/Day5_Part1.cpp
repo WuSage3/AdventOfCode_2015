@@ -47,7 +47,8 @@ int main() {
 
 int checkForDoubleLetter(string inputString) {
   int doubleLetterFlag = 0;
-  for(string::size_type i = 0; i < (inputString.size()-1); ++i) {
+  string::size_type inputStringSize = inputString.size();
+  for(string::size_type i = 0; i < (inputStringSize-1); ++i) {
     char currLetter = inputString[i];
     char nextLetter = inputString[i+1];
     if(currLetter == nextLetter) {
@@ -61,7 +62,8 @@ int checkForDoubleLetter(string inputString) {
 
 int countVowels(string inputString) {
   int numVowels = 0;
-  for(string::size_type i = 0; i < inputString.size(); ++i) {
+  string::size_type inputStringSize = inputString.size();
+  for(string::size_type i = 0; i < inputStringSize; ++i) {
     char letter = inputString[i];
     switch(letter) {
       case 'a':
