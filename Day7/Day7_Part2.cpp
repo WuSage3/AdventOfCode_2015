@@ -113,6 +113,79 @@ int main() {
     }
   }
 
+  // Part 2:
+  // Short wire a to wire b
+  signals["b"] = signals["a"];
+
+  // Reset everything but wire "b"
+  for(map<string, uint16_t>::iterator iter = signals.begin(); iter != signals.end(); ++iter) {
+    string signal = iter->first;
+    if(signal != "b") {
+      signalsDefined[signal] = -1;
+    }
+  }
+
+  // Run the same loop again, but with only wire b defined
+  while(areWeDoneYet(&signalsDefined) != 1) {
+    for(vector<vector<string>>::iterator i = parsedInput.begin(); i != parsedInput.end(); ++i) {
+      vector<string> parsedInputVector = *i;
+      string leftHandSide = parsedInputVector.at(0);
+      string rightHandSide = parsedInputVector.at(1);
+      //cout << "LHS: \"" << leftHandSide << "\" RHS: \"" << rightHandSide << "\"" << endl;
+
+
+      vector<string> LHS_parsed = split(leftHandSide, ' ');
+      int LHS_size = LHS_parsed.size();
+      string firstElement = LHS_parsed.at(0);
+      int firstElemDigitFlag = isdigit(firstElement[0]);
+
+      if(LHS_size == 1) { // We have an input which is "NUM -> signal" or "signal -> signal"
+        if(firstElemDigitFlag != 0  && signalsDefined[rightHandSide] < 0) { // "NUM -> signal"
+          uint16_t value = (uint16_t)atoi(firstElement.c_str());
+          //cout << "Signal: " << rightHandSide << " Value: " << value << endl;
+          signals[rightHandSide] = value;
+          signalsDefined[rightHandSide] = 1;
+        } else { // "signal -> signal"
+          if(signalsDefined[firstElement] >= 0 && signalsDefined[rightHandSide] < 0) {
+            signals[rightHandSide] = signals[firstElement];
+            signalsDefined[rightHandSide] = 1;
+          }
+        }
+      } else {
+        if(firstElement == "NOT") { // We have an input which is "NOT signal -> signal"
+          string secondElement = LHS_parsed.at(1);
+          //cout << "NOT " << secondElement << endl;
+          if(signalsDefined[secondElement] >= 0 && signalsDefined[rightHandSide] < 0) {
+            signals[rightHandSide] = ~signals[secondElement];
+            signalsDefined[rightHandSide] = 1;
+          }
+        } else { // 3-element LHS
+          string op = LHS_parsed.at(1);
+          string thirdElement = LHS_parsed.at(2);
+          int thirdElemDigitFlag = isdigit(thirdElement[0]);
+          if(firstElemDigitFlag != 0) { // "NUM OP signal -> signal" - Assume we have only one "raw number" element per line
+            uint16_t value = (uint16_t)atoi(firstElement.c_str());
+            if(signalsDefined[thirdElement] >= 0 && signalsDefined[rightHandSide] < 0) {
+              signals[rightHandSide] = handleNumSignalOp(value, thirdElement, rightHandSide, op, &signals);
+              signalsDefined[rightHandSide] = 1;
+            }
+          } else if(thirdElemDigitFlag != 0) { // "signal OP NUM -> signal" - Assume we have only one "raw number" element per line
+            uint16_t value = (uint16_t)atoi(thirdElement.c_str());
+            if(signalsDefined[firstElement] >= 0 && signalsDefined[rightHandSide] < 0) {
+              signals[rightHandSide] = handleNumSignalOp(value, firstElement, rightHandSide, op, &signals);
+              signalsDefined[rightHandSide] = 1;
+            }
+          } else { // "Signal OP Signal -> signal"
+            if((signalsDefined[firstElement] >= 0) && (signalsDefined[thirdElement] >= 0) && signalsDefined[rightHandSide] < 0) {
+              signals[rightHandSide] = handleSignalSignalOp(firstElement, thirdElement, rightHandSide, op, &signals);
+              signalsDefined[rightHandSide] = 1;
+            }
+          }
+        }
+      }
+    }
+  }
+
   cout << endl << "Signals: " << endl;
   printSignals(&signals);
 
