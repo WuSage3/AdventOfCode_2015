@@ -8,7 +8,7 @@
 using namespace std;
 
 /* Prototypes */
-int doneFlag(int*) ;
+int doneFlag(int*);
 int getContainerCombTotalLiters(int*, int*);
 int getContainerCombTotalContainersUsed(int*);
 
